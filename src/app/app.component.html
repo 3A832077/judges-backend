@@ -1,0 +1,62 @@
+<nz-layout class="app-layout">
+  <nz-sider class="menu-sidebar" nzCollapsible nzWidth="200px" nzTheme="light"
+    [(nzCollapsed)]="isCollapsed" [nzTrigger]="null" *ngIf="!isDrawerVisible">
+    <div class="sidebar-logo">
+      <span class="trigger" nz-icon nzType="menu" (click)="showDrawer()"></span>
+      <h1>ccccc</h1>
+    </div>
+    <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <li nz-menu-item nz-tooltip [nzTooltipTitle]="isCollapsed ? '表單-解析檔案' : ''" nzTooltipPlacement="right" routerLink="/form" nzMatchRouter="/form">
+        <span nz-icon nzType="form" nzTheme="outline"></span>
+        <span>表單-解析檔案</span>
+      </li>
+      <li nz-menu-item nz-tooltip [nzTooltipTitle]="isCollapsed ? '未解析檔案' : ''" nzTooltipPlacement="right" routerLink="/unparsed" nzMatchRouter="/unparsed">
+        <span nz-icon nzType="table" nzTheme="outline"></span>
+        <span>未解析檔案</span>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-drawer *ngIf="isDrawerVisible" [nzClosable]="false" [nzVisible]="visible"
+    nzPlacement="left" (nzOnClose)="close()" nzWidth="180px">
+    <ng-container *nzDrawerContent>
+      <div class="sidebar-logo">
+      </div>
+      <ul nz-menu nzTheme="light" nzMode="inline">
+        <li nz-menu-item>
+          <span nz-icon nzType="form" nzTheme="outline"></span>
+          <span>表單-解析檔案</span>
+        </li>
+        <li nz-menu-item>
+          <span nz-icon nzType="table" nzTheme="outline"></span>
+          <span>未解析檔案</span>
+        </li>
+      </ul>
+    </ng-container>
+  </nz-drawer>
+  <nz-layout>
+    <nz-header>
+      <div class="app-header">
+        <div class="sidebar-logo">
+            <div class="nav-container" *ngIf="isDrawerVisible">
+              <div class="left-section">
+                <span class="trigger" nz-icon nzType="menu" (click)="showDrawer()"></span>
+                <h1>ccccc</h1>
+              </div>
+              <ul nz-menu nzTheme="light" nzMode="horizontal">
+                <li nz-menu-item class="login-item">登入</li>
+              </ul>
+            </div>
+
+            <ul nz-menu nzTheme="light" nzMode="horizontal" class="nav">
+              <li nz-menu-item class="login-item">登入</li>
+            </ul>
+        </div>
+      </div>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
