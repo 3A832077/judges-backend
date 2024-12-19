@@ -102,3 +102,9 @@ nz-content {
 .login-item {
   margin-left: auto;
 }
+
+h1{
+  position: fixed;
+  top: 6px;
+  z-index: 1000;
+}
