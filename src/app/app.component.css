@@ -47,9 +47,8 @@
 
 .sidebar-logo h1 {
   display: inline-block;
-  margin: 0 0 0 20px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 20px;
   font-family: Avenir,Helvetica Neue,Arial,Helvetica,sans-serif;
   vertical-align: middle;
 }
@@ -103,8 +102,10 @@ nz-content {
   margin-left: auto;
 }
 
-h1{
-  position: fixed;
-  top: 6px;
-  z-index: 1000;
+nz-layout {
+  height: 100vh;
+}
+
+nz-footer {
+  text-align: center;
 }
