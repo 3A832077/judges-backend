@@ -3,18 +3,42 @@
     新增檔案
   </button>
 </div>
-<nz-table nzShowPagination nzShowSizeChanger>
+<nz-table [nzData]="listOfData" #filterTable nzShowSizeChanger>
   <thead>
     <tr>
-      <th>檔案名稱</th>
-      <th>建立時間</th>
-      <th>最後修改時間</th>
-      <th nzWidth="150px">是否被解析</th>
-      <th>操作</th>
+      <th *ngFor="let column of Columns"
+          [nzWidth]="column.width"
+          [nzAlign]="column.position"
+          [nzSortFn]="column.sortFn"
+          [nzFilterMultiple]="column.filterMultiple"
+          [nzFilters]="column.listOfFilter"
+          [nzFilterFn]="column.filterFn"
+          [nzShowFilter]="column.showFilter"
+          [nzShowSort]="column.showSort">
+        {{ column.name }}
+      </th>
     </tr>
   </thead>
   <tbody>
-    <tr></tr>
+    <tr *ngFor="let data of filterTable.data">
+      <td>
+        {{ data.name }}
+      </td>
+      <td>
+        {{ data.createDate }}
+      </td>
+      <td>
+        {{ data.lastUpdate }}
+      </td>
+      <td nzAlign="center">
+        {{ data.done ? '是' : '否' }}
+      </td>
+      <td nzAlign="center">
+        <a>下載</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a>刪除</a>
+      </td>
+    </tr>
   </tbody>
 </nz-table>
 

@@ -173,7 +173,7 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      type: ['', [Validators.required]],
+      type: [null, [Validators.required]],
       url: ['', [Validators.required, Validators.pattern('https?://.+')]],
     });
   }
