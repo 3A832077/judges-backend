@@ -174,8 +174,8 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      type: ['S', [Validators.required]],
-      url: ['', [Validators.required]]
+      type: ['', [Validators.required]],
+      url: ['', [Validators.required, Validators.pattern('https?://.+')]],
     });
   }
 
