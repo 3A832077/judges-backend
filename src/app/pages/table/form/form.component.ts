@@ -10,15 +10,14 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 
 @Component({
-  selector: 'app-form',
-  standalone: true,
-  imports: [
-            NzFormModule, CommonModule, FormsModule,
-            ReactiveFormsModule, NzSelectModule, NzButtonModule,
-            NzInputModule, NzIconModule , NzDividerModule
-          ],
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+    selector: 'app-form',
+    imports: [
+        NzFormModule, CommonModule, FormsModule,
+        ReactiveFormsModule, NzSelectModule, NzButtonModule,
+        NzInputModule, NzIconModule, NzDividerModule
+    ],
+    templateUrl: './form.component.html',
+    styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
 

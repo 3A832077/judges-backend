@@ -9,14 +9,13 @@ import { FormComponent } from './form/form.component';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
-  selector: 'app-table',
-  standalone: true,
-  imports: [
-            CommonModule, NzTableModule, NzButtonModule,
-            NzModalModule
-          ],
-  templateUrl: './table.component.html',
-  styleUrl: './table.component.css',
+    selector: 'app-table',
+    imports: [
+        CommonModule, NzTableModule, NzButtonModule,
+        NzModalModule
+    ],
+    templateUrl: './table.component.html',
+    styleUrl: './table.component.css'
 })
 export class TableComponent implements OnInit {
 

@@ -8,15 +8,14 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-            CommonModule, RouterLink, RouterOutlet,
-            NzIconModule, NzLayoutModule, NzMenuModule,
-            NzDrawerModule, NzToolTipModule,
-          ],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    imports: [
+        CommonModule, RouterOutlet,NzIconModule,
+        NzLayoutModule, NzMenuModule, NzDrawerModule,
+        NzToolTipModule
+    ],
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
 
