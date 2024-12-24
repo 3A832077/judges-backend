@@ -103,7 +103,7 @@ nz-content {
 }
 
 nz-layout {
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 nz-footer {

@@ -1,9 +1,24 @@
 <div nz-col nzSpan="24" class="buttonDiv">
+  <div nz-col [nzSpan]="6">
+    <form nz-form [formGroup]="form">
+      <nz-form-item>
+        <nz-form-control [nzSpan]="18">
+          <nz-input-group nzSuffixIcon="search">
+            <input formControlName="search" nz-input placeholder="請輸入關鍵字"
+              (keypress)="searchList($event)"/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
   <button nz-button nzType="primary" (click)="openModal()">
     新增檔案
   </button>
 </div>
-<nz-table [nzData]="listOfData" #filterTable nzShowSizeChanger>
+<nz-table #filterTable [nzData]="displayedList" nzShowSizeChanger
+          [(nzPageSize)]="pageSize" [nzTotal]="total"
+          [(nzPageIndex)]="pageIndex" (nzPageIndexChange)="changePage($event, pageSize)"
+          (nzPageSizeChange)="changePage(pageIndex, $event)">
   <thead>
     <tr>
       <th *ngFor="let column of Columns"
