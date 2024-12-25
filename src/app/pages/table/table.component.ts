@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, formatDate } from '@angular/common';
-import { NzTableModule,  NzTableFilterFn, NzTableFilterList, NzTableSortFn } from 'ng-zorro-antd/table';
+import { NzTableModule,  NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
 import { NzModalService } from 'ng-zorro-antd/modal';
@@ -11,7 +11,6 @@ import { addDays, format, subDays } from 'date-fns';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { FormsModule, FormBuilder, FormControl, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
-import { tr } from 'date-fns/locale';
 
 interface ItemData {
   id: number;
@@ -28,6 +27,7 @@ interface ColumnItem {
   sortFn: NzTableSortFn<ItemData> | null;
   listOfFilter: NzTableFilterList;
   filterFn: NzTableFilterFn<ItemData> | null;
+  sortOrder: NzTableSortOrder | null;
   filterMultiple: boolean;
   showSort: boolean;
   showFilter: boolean;
@@ -37,7 +37,7 @@ interface ColumnItem {
     imports: [
         CommonModule, NzTableModule, NzButtonModule,
         NzModalModule, NzDividerModule, NzFormModule,
-        FormsModule, ReactiveFormsModule, NzInputModule
+        FormsModule, ReactiveFormsModule, NzInputModule,
     ],
     templateUrl: './table.component.html',
     styleUrl: './table.component.css'
@@ -56,6 +56,7 @@ export class TableComponent implements OnInit {
       width: '',
       position: null,
       sortFn: (a: ItemData, b: ItemData) => a.name.localeCompare(b.name, 'zh-Hant'),
+      sortOrder: null,
       filterMultiple: true,
       listOfFilter: [],
       filterFn: null,
@@ -66,6 +67,7 @@ export class TableComponent implements OnInit {
       name: '建立時間',
       width: '',
       position: null,
+      sortOrder: 'descend',
       sortFn: (a: ItemData, b: ItemData) => new Date(a.createDate).getTime() - new Date(b.createDate).getTime(),
       filterMultiple: false,
       listOfFilter: [],
@@ -77,6 +79,7 @@ export class TableComponent implements OnInit {
       name: '最後修改時間',
       width: '',
       position: null,
+      sortOrder: null,
       sortFn: (a: ItemData, b: ItemData) => new Date(a.lastUpdate).getTime() - new Date(b.lastUpdate).getTime(),
       filterMultiple: false,
       listOfFilter: [],
@@ -86,22 +89,24 @@ export class TableComponent implements OnInit {
     },
     {
       name: '是否已解析',
-      width: '150px',
+      width: '',
       position: 'center',
       sortFn: null,
-      filterMultiple: false,
+      sortOrder: null,
+      filterMultiple: true,
       listOfFilter: [
         { text: '是', value: true },
         { text: '否', value: false }
       ],
-      filterFn: (done: boolean, item: ItemData) => item.done === done,
+      filterFn: (done: boolean[], item: ItemData) => done.some(d => item.done === d),
       showSort: false,
       showFilter: true
     },
     {
       name: '操作',
-      width: '150px',
+      width: '120px',
       position: 'center',
+      sortOrder: null,
       sortFn: null,
       listOfFilter: [],
       filterFn: null,
@@ -113,14 +118,14 @@ export class TableComponent implements OnInit {
 
   listOfData: ItemData[] = [
     {
-      id: 1,
+      id: 0,
       name: '檔案1',
       createDate: this.formattedDate,
       lastUpdate: format(subDays(new Date(), 1), 'yyyy-MM-dd'),
       done: true,
     },
     {
-      id: 2,
+      id: 1,
       name: 'ccc2',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
@@ -129,126 +134,126 @@ export class TableComponent implements OnInit {
     {
       id: 2,
       name: '檔案2',
-      createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
+      createDate: format(subDays(new Date(), 10), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
-      id: 2,
+      id: 3,
       name: '檔案2',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: true
     },
     {
-      id: 2,
+      id: 4,
       name: 'cccc',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
-      id: 2,
+      id: 5,
       name: '檔案2',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
-      id: 2,
+      id: 6,
       name: 'aaa',
-      createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
+      createDate: format(subDays(new Date(), 15), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: true
     },
     {
-      id: 2,
+      id: 7,
       name: '檔案2',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: true
     },
     {
-      id: 2,
+      id: 8,
+      name: '檔案2',
+      createDate: format(subDays(new Date(), 1), 'yyyy-MM-dd'),
+      lastUpdate: this.formattedDate,
+      done: false
+    },
+    {
+      id: 9,
       name: '檔案2',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
-      id: 2,
-      name: '檔案2',
-      createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
-      lastUpdate: this.formattedDate,
-      done: false
-    },
-    {
-      id: 2,
+      id: 10,
       name: 'ddd',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
-      id: 2,
+      id: 11,
       name: '檔案2',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
-      id: 2,
+      id: 12,
+      name: '檔案2',
+      createDate: format(addDays(new Date(), 12), 'yyyy-MM-dd'),
+      lastUpdate: this.formattedDate,
+      done: false
+    },
+    {
+      id: 13,
+      name: '檔案2',
+      createDate: format(addDays(new Date(), 2), 'yyyy-MM-dd'),
+      lastUpdate: this.formattedDate,
+      done: false
+    },
+    {
+      id: 14,
       name: '檔案2',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
-      id: 2,
+      id: 15,
+      name: '檔案2',
+      createDate: format(addDays(new Date(), 4), 'yyyy-MM-dd'),
+      lastUpdate: this.formattedDate,
+      done: false
+    },
+    {
+      id: 16,
+      name: '檔案2',
+      createDate: format(subDays(new Date(), 7), 'yyyy-MM-dd'),
+      lastUpdate: this.formattedDate,
+      done: false
+    },
+    {
+      id: 17,
+      name: '檔案2',
+      createDate: format(addDays(new Date(), 4), 'yyyy-MM-dd'),
+      lastUpdate: this.formattedDate,
+      done: false
+    },
+    {
+      id: 18,
       name: '檔案2',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
-      id: 2,
+      id: 19,
       name: '檔案2',
-      createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
-      lastUpdate: this.formattedDate,
-      done: false
-    },
-    {
-      id: 2,
-      name: '檔案2',
-      createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
-      lastUpdate: this.formattedDate,
-      done: false
-    },
-    {
-      id: 2,
-      name: '檔案2',
-      createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
-      lastUpdate: this.formattedDate,
-      done: false
-    },
-    {
-      id: 2,
-      name: '檔案2',
-      createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
-      lastUpdate: this.formattedDate,
-      done: false
-    },
-    {
-      id: 2,
-      name: '檔案2',
-      createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
-      lastUpdate: this.formattedDate,
-      done: false
-    },
-    {
-      id: 2,
-      name: '檔案2',
-      createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
+      createDate: format(subDays(new Date(), 6), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
@@ -278,8 +283,6 @@ export class TableComponent implements OnInit {
     this.form = this.fb.group({
       search: [null],
     });
-    this.filteredLists = this.listOfData;
-    this.updateDisplayedList();
   }
 
   /**
@@ -296,10 +299,19 @@ export class TableComponent implements OnInit {
       nzFooter: null
     });
 
-    // 接收子組件傳回的資料
+    // 接收表單傳回的資料
     modal.afterClose.subscribe((result) => {
       if (result) {
-        console.log(result);
+        this.listOfData.push(
+          {
+            id: this.listOfData.length + 1,
+            name: result.label,
+            createDate: this.formattedDate,
+            lastUpdate: this.formattedDate,
+            done: false
+          }
+        );
+        this.listOfData = [...this.listOfData];
         this.message.success('新增成功');
       }
     });
@@ -324,38 +336,27 @@ export class TableComponent implements OnInit {
           item.name.indexOf(searchTerm) !== -1
         );
       }
-      this.updateDisplayedList();
     }
+    this.displayedList = this.filteredLists;
   }
 
-  changePage(newPageIndex: number, newPageSize?: number): void {
-    if (newPageSize) {
-      this.pageSize = newPageSize;
-    }
-    this.totalPages = Math.ceil(this.total / this.pageSize);
-
-    // 確保 pageIndex 不會超出新的 totalPages
-    if (newPageIndex > this.totalPages) {
-      newPageIndex = this.totalPages;
-    }
-
-    if (newPageIndex < 1) {
-      newPageIndex = 1;
-    }
-
-    this.pageIndex = newPageIndex;
-    const startIndex = (this.pageIndex - 1) * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.displayedList = this.listOfData.slice(startIndex, endIndex);
-  }
-
-   /**
-   *根據當前頁碼和已篩選的列表，更新顯示的列表
-  */
-   updateDisplayedList() {
-    const startIndex = (this.pageIndex - 1) * 12;
-    const endIndex = Math.min(startIndex + 12, this.filteredLists.length);
-    this.displayedList = this.filteredLists.slice(startIndex, endIndex);
+  /**
+   * 刪除資料
+   * @param id
+   */
+  deleteFile(id: number): void {
+    const modal: NzModalRef = this.modalService.confirm({
+      nzTitle: '確定要刪除此檔案嗎?',
+      nzOnOk: () => {
+        const index = this.listOfData.findIndex(item => item.id === id);
+        this.listOfData.splice(index, 1);
+        this.displayedList = [...this.listOfData];
+        this.message.success('刪除成功');
+      },
+      nzOnCancel: () => {
+        modal.close();
+      }
+    });
   }
 
 }

@@ -166,6 +166,8 @@ export class FormComponent implements OnInit {
     }
   ]
 
+  selectedLabel!: string;
+
   constructor(
               private fb: FormBuilder,
               private modal: NzModalRef
@@ -175,6 +177,12 @@ export class FormComponent implements OnInit {
     this.form = this.fb.group({
       type: [null, [Validators.required]],
       url: ['', [Validators.required, Validators.pattern('https?://.+')]],
+    });
+
+    // 取得select label
+    this.form.get('type')?.valueChanges.subscribe(value => {
+      const selectedOption = this.judicial.find((item: { id: any; }) => item.id === value);
+      this.selectedLabel = selectedOption ? selectedOption.name : null;
     });
   }
 
@@ -186,9 +194,13 @@ export class FormComponent implements OnInit {
     this.form.get('url')?.setValue(value);
   }
 
+  /**
+   * 提交表單
+   */
   submitForm() {
     if (this.form.valid) {
-      this.modal.close(this.form.value);
+      let formValue = { ...this.form.value, label: this.selectedLabel};
+      this.modal.close(formValue);
     }
     else {
       // 表單驗證
