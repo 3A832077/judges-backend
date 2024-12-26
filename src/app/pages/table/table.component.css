@@ -3,3 +3,8 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.formDiv{
+  display: flex;
+  justify-content: space-between;
+}

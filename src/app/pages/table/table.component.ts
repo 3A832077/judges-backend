@@ -11,6 +11,7 @@ import { addDays, format, subDays } from 'date-fns';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { FormsModule, FormBuilder, FormControl, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 interface ItemData {
   id: number;
@@ -38,6 +39,7 @@ interface ColumnItem {
         CommonModule, NzTableModule, NzButtonModule,
         NzModalModule, NzDividerModule, NzFormModule,
         FormsModule, ReactiveFormsModule, NzInputModule,
+        NzIconModule
     ],
     templateUrl: './table.component.html',
     styleUrl: './table.component.css'
@@ -324,15 +326,11 @@ export class TableComponent implements OnInit {
   searchList(event: any): any {
     if (event.key === 'Enter') {
       const searchTerm = event.target.value.trim();
-      const startIndex = (this.pageIndex - 1) * 12;
-      const endIndex = Math.min(startIndex + 12, this.total);
-      const currentPageItems = this.listOfData.slice(startIndex, endIndex);
-
       if (searchTerm === '') {
-        this.filteredLists = currentPageItems;
+        this.filteredLists = this.listOfData;
       }
       else {
-        this.filteredLists = currentPageItems.filter((item) =>
+        this.filteredLists = this.listOfData.filter((item) =>
           item.name.indexOf(searchTerm) !== -1
         );
       }
