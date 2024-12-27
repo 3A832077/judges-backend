@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { CommonModule } from '@angular/common';
 import { FormsModule, FormBuilder, FormControl, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
@@ -7,7 +7,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzModalRef } from 'ng-zorro-antd/modal';
+import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 
 @Component({
     selector: 'app-form',
@@ -20,6 +20,8 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
     styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
+
+  data = inject(NZ_MODAL_DATA);
 
   form: FormGroup = new FormGroup({});
 
@@ -175,8 +177,8 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      type: [null, [Validators.required]],
-      url: ['', [Validators.required, Validators.pattern('https?://.+')]],
+      type: [this.data.type, [Validators.required]],
+      url: [this.data.url, [Validators.required, Validators.pattern('https?://.+')]],
     });
 
     // 取得select label
@@ -184,14 +186,6 @@ export class FormComponent implements OnInit {
       const selectedOption = this.judicial.find((item: { id: any; }) => item.id === value);
       this.selectedLabel = selectedOption ? selectedOption.name : null;
     });
-  }
-
-  /**
-   * 清空輸入的網址
-   * @param value
-   */
-  setUrl(value: string) {
-    this.form.get('url')?.setValue(value);
   }
 
   /**

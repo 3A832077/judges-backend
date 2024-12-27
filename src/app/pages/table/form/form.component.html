@@ -26,12 +26,12 @@
     </nz-form-item>
     <ng-template #inputClearTp>
       <span
-        *ngIf="this.form.get('url')?.value"
+        *ngIf="form.get('url')?.value"
         nz-icon
         class="ant-input-clear-icon"
         nzTheme="fill"
         nzType="close-circle"
-        (click)="setUrl('')"
+        (click)="form.get('url')?.setValue('')"
       ></span>
     </ng-template>
   </div>

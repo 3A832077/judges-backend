@@ -18,7 +18,7 @@
         </nz-form-control>
       </nz-form-item>
     </form>
-    <button nz-button nzType="primary" (click)="openModal()">
+    <button nz-button nzType="primary" (click)="openModal(false)">
       <nz-icon nzType="plus" nzTheme="outline" />新增檔案
     </button>
   </div>
@@ -26,7 +26,7 @@
 <nz-table #filterTable [nzData]="displayedList" [nzTotal]="total"
           [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
           [nzShowTotal]="totalTemplate" nzShowSizeChanger>
-          <ng-template #totalTemplate let-total>總共 {{ total }} 筆</ng-template>
+<ng-template #totalTemplate let-total>總共 {{ total }} 筆</ng-template>
   <thead>
     <tr>
       <th *ngFor="let column of Columns"
@@ -46,12 +46,12 @@
   <tbody>
     <tr *ngFor="let data of filterTable.data">
       <td nzBreakWord>
-        {{ data.name || '--' }}
+        {{ data.name }}
       </td>
-      <td>
+      <td nzAlign="center">
         {{ data.createDate }}
       </td>
-      <td>
+      <td nzAlign="center">
         {{ data.lastUpdate }}
       </td>
       <td nzAlign="center">
@@ -59,11 +59,15 @@
       </td>
       <td nzAlign="center">
         <a title="下載">
-          <img src="download.svg" alt="下載" width="22" height="22">
+          <img src="download.svg" alt="下載">
+        </a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a title="編輯" (click)="openModal(true, data)">
+          <img src="edit.svg" alt="編輯" class="editImg" height="20px" width="20px">
         </a>
         <nz-divider nzType="vertical"></nz-divider>
         <a title="刪除" (click)="deleteFile(data.id)">
-          <img src="delete.svg" alt="刪除" width="22" height="22">
+          <img src="delete.svg" alt="刪除" class="deleteImg">
         </a>
       </td>
     </tr>

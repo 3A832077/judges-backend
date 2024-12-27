@@ -8,3 +8,11 @@
   display: flex;
   justify-content: space-between;
 }
+
+.editImg{
+  vertical-align: text-bottom;
+}
+
+.deleteImg{
+  vertical-align: top;
+}

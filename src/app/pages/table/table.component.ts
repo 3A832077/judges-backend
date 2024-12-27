@@ -15,7 +15,9 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 
 interface ItemData {
   id: number;
+  type: string;
   name: string;
+  url: string;
   createDate: string;
   lastUpdate: string;
   done: boolean;
@@ -68,7 +70,7 @@ export class TableComponent implements OnInit {
     {
       name: '建立時間',
       width: '',
-      position: null,
+      position: 'center',
       sortOrder: 'descend',
       sortFn: (a: ItemData, b: ItemData) => new Date(a.createDate).getTime() - new Date(b.createDate).getTime(),
       filterMultiple: false,
@@ -80,7 +82,7 @@ export class TableComponent implements OnInit {
     {
       name: '最後修改時間',
       width: '',
-      position: null,
+      position: 'center',
       sortOrder: null,
       sortFn: (a: ItemData, b: ItemData) => new Date(a.lastUpdate).getTime() - new Date(b.lastUpdate).getTime(),
       filterMultiple: false,
@@ -106,7 +108,7 @@ export class TableComponent implements OnInit {
     },
     {
       name: '操作',
-      width: '120px',
+      width: '140px',
       position: 'center',
       sortOrder: null,
       sortFn: null,
@@ -121,144 +123,157 @@ export class TableComponent implements OnInit {
   listOfData: ItemData[] = [
     {
       id: 0,
-      name: '檔案1',
+      type: 'S',
+      name: '最高法院',
+      url: 'https://tps.judicial.gov.tw/',
       createDate: this.formattedDate,
       lastUpdate: format(subDays(new Date(), 1), 'yyyy-MM-dd'),
       done: true,
     },
     {
       id: 1,
-      name: 'ccc2',
+      type: 'HC',
+      name: '臺灣高等法院',
+      url: 'https://tph.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
       id: 2,
-      name: '檔案2',
+      type: 'TYDC',
+      name: '臺灣桃園地方法院',
+      url: 'https://tyd.judicial.gov.tw/',
       createDate: format(subDays(new Date(), 10), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
       id: 3,
-      name: '檔案2',
+      type: 'PCDC',
+      name: '臺灣新北地方法院',
+      url: 'https://pcd.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: true
     },
     {
       id: 4,
-      name: 'cccc',
+      type: 'TBHAC',
+      name: '臺北高等行政法院',
+      url: 'https://tpb.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
       id: 5,
-      name: '檔案2',
+      type: 'TZHC',
+      name: '臺灣高等法院臺中分院',
+      url: 'https://tch.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
       id: 6,
-      name: 'aaa',
+      type: 'TBDC',
+      name: '臺灣臺北地方法院',
+      url: 'https://tpd.judicial.gov.tw/',
       createDate: format(subDays(new Date(), 15), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: true
     },
     {
       id: 7,
-      name: '檔案2',
+      type: 'JLDC',
+      name: '臺灣基隆地方法院',
+      url: 'https://kld.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: true
     },
     {
       id: 8,
-      name: '檔案2',
+      type: 'TNDC',
+      name: '臺灣臺南地方法院',
+      url: 'https://tnd.judicial.gov.tw/',
       createDate: format(subDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
       id: 9,
-      name: '檔案2',
+      type: 'TBHAC',
+      name: '臺北高等行政法院',
+      url: 'https://tpb.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
       id: 10,
-      name: 'ddd',
+      type: 'JMHC',
+      name: '臺灣高等法院高雄分院',
+      url: 'https://ksh.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
       id: 11,
-      name: '檔案2',
+      type: 'SA',
+      name: '福建高等法院金門分院',
+      url: 'https://kmh.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
       id: 12,
-      name: '檔案2',
+      type: 'MLDC',
+      name: '臺灣苗栗地方法院',
+      url: 'https://mld.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 12), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
       id: 13,
-      name: '檔案2',
+      type: 'ILDC',
+      name: '臺灣宜蘭地方法院',
+      url: 'https://ild.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 2), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
       id: 14,
-      name: '檔案2',
+      type: 'SA',
+      name: '臺灣高雄少年及家事法院',
+      url: 'https://fhfh.com',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
       id: 15,
-      name: '檔案2',
+      type: 'PDDC',
+      name: '臺灣屏東地方法院',
+      url: 'https://ptd.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 4), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
     },
     {
       id: 16,
-      name: '檔案2',
+      type: 'IBFC',
+      name: '智慧財產及商業法院',
+      url: 'https://ipc.judicial.gov.tw/',
       createDate: format(subDays(new Date(), 7), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
       done: false
-    },
-    {
-      id: 17,
-      name: '檔案2',
-      createDate: format(addDays(new Date(), 4), 'yyyy-MM-dd'),
-      lastUpdate: this.formattedDate,
-      done: false
-    },
-    {
-      id: 18,
-      name: '檔案2',
-      createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
-      lastUpdate: this.formattedDate,
-      done: false
-    },
-    {
-      id: 19,
-      name: '檔案2',
-      createDate: format(subDays(new Date(), 6), 'yyyy-MM-dd'),
-      lastUpdate: this.formattedDate,
-      done: false
-    },
+    }
   ];
 
   pageIndex : number = 1;
@@ -288,34 +303,50 @@ export class TableComponent implements OnInit {
   }
 
   /**
-   * 打開新增視窗
+   * 打開新增/編輯視窗
    */
-  openModal(): void {
+  openModal(isEdit: boolean, data?: any): void {
     const modal: NzModalRef = this.modalService.create({
-      nzTitle: '新增檔案',
+      nzTitle: isEdit ? '編輯' : '新增',
       nzContent: FormComponent,
       nzMaskClosable: false,
       nzCentered: true,
       nzZIndex: 60,
       nzWidth: window.innerWidth < 579 ? '400px' : '500px',
-      nzFooter: null
+      nzFooter: null,
+      nzData: data,
     });
 
     // 接收表單傳回的資料
     modal.afterClose.subscribe((result) => {
-      if (result) {
+      if (isEdit) {
+        // 編輯
+        const index = this.listOfData.findIndex(item => item.id === data.id);
+        if (index !== -1) {
+          this.listOfData[index] = {
+            ...this.listOfData[index],
+            name: result.name,
+            lastUpdate: this.formattedDate
+          };
+          this.message.success('編輯成功');
+        }
+      }
+      else {
+        // 新增
         this.listOfData.push(
           {
             id: this.listOfData.length + 1,
+            type: result.type,
             name: result.label,
+            url: result.url,
             createDate: this.formattedDate,
             lastUpdate: this.formattedDate,
             done: false
           }
         );
-        this.listOfData = [...this.listOfData];
         this.message.success('新增成功');
       }
+      this.displayedList = [...this.listOfData];
     });
   }
 
@@ -347,9 +378,14 @@ export class TableComponent implements OnInit {
       nzTitle: '確定要刪除此檔案嗎?',
       nzOnOk: () => {
         const index = this.listOfData.findIndex(item => item.id === id);
-        this.listOfData.splice(index, 1);
-        this.displayedList = [...this.listOfData];
-        this.message.success('刪除成功');
+        if (index === -1) {
+          this.message.error('刪除失敗');
+        }
+        else{
+          this.listOfData.splice(index, 1);
+          this.displayedList = [...this.listOfData];
+          this.message.success('刪除成功');
+        }
       },
       nzOnCancel: () => {
         modal.close();
