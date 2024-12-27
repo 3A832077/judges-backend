@@ -21,7 +21,7 @@ import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 })
 export class FormComponent implements OnInit {
 
-  data = inject(NZ_MODAL_DATA);
+  data = inject(NZ_MODAL_DATA) || undefined;
 
   form: FormGroup = new FormGroup({});
 
@@ -177,8 +177,8 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      type: [this.data.type, [Validators.required]],
-      url: [this.data.url, [Validators.required, Validators.pattern('https?://.+')]],
+      type: [this.data?.type || null, [Validators.required]],
+      url: [this.data?.url || null, [Validators.required, Validators.pattern('https?://.+')]],
     });
 
     // 取得select label
@@ -193,6 +193,9 @@ export class FormComponent implements OnInit {
    */
   submitForm() {
     if (this.form.valid) {
+      if (this.data !== undefined){
+        this.selectedLabel = this.data.name;
+      }
       let formValue = { ...this.form.value, label: this.selectedLabel};
       this.modal.close(formValue);
     }

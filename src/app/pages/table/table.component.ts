@@ -10,7 +10,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { addDays, format, subDays } from 'date-fns';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { FormsModule, FormBuilder, FormControl, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { FormsModule, FormBuilder, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 interface ItemData {
@@ -319,20 +319,20 @@ export class TableComponent implements OnInit {
 
     // 接收表單傳回的資料
     modal.afterClose.subscribe((result) => {
-      if (isEdit) {
-        // 編輯
+      if (isEdit) { // 編輯
         const index = this.listOfData.findIndex(item => item.id === data.id);
         if (index !== -1) {
-          this.listOfData[index] = {
-            ...this.listOfData[index],
-            name: result.name,
-            lastUpdate: this.formattedDate
-          };
+          this.listOfData[index].name = result.label;
+          this.listOfData[index].type = result.type;
+          this.listOfData[index].url = result.url;
+          this.listOfData[index].lastUpdate = this.formattedDate;
           this.message.success('編輯成功');
         }
+        else {
+          this.message.error('編輯失敗');
+        }
       }
-      else {
-        // 新增
+      else { // 新增
         this.listOfData.push(
           {
             id: this.listOfData.length + 1,
