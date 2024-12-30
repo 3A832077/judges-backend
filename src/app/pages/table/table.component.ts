@@ -286,8 +286,6 @@ export class TableComponent implements OnInit {
 
   displayedList: any[] = this.listOfData;
 
-  totalPages: number = Math.ceil(this.total / this.pageSize);
-
   form: FormGroup = new FormGroup({});
 
   constructor(
@@ -319,22 +317,22 @@ export class TableComponent implements OnInit {
 
     // 接收表單傳回的資料
     modal.afterClose.subscribe((result) => {
-      if (isEdit) { // 編輯
-        const index = this.listOfData.findIndex(item => item.id === data.id);
-        if (index !== -1) {
-          this.listOfData[index].name = result.label;
-          this.listOfData[index].type = result.type;
-          this.listOfData[index].url = result.url;
-          this.listOfData[index].lastUpdate = this.formattedDate;
-          this.message.success('編輯成功');
+      const index = this.listOfData.findIndex(item => item.id === data.id);
+      if (result){
+        if (isEdit) { // 編輯
+          if (index !== -1) {
+            this.listOfData[index].name = result.label;
+            this.listOfData[index].type = result.type;
+            this.listOfData[index].url = result.url;
+            this.listOfData[index].lastUpdate = this.formattedDate;
+            this.message.success('編輯成功');
+          }
+          else {
+            this.message.error('編輯失敗');
+          }
         }
-        else {
-          this.message.error('編輯失敗');
-        }
-      }
-      else { // 新增
-        this.listOfData.push(
-          {
+        else { // 新增
+          this.listOfData.push({
             id: this.listOfData.length + 1,
             type: result.type,
             name: result.label,
@@ -342,9 +340,9 @@ export class TableComponent implements OnInit {
             createDate: this.formattedDate,
             lastUpdate: this.formattedDate,
             done: false
-          }
-        );
-        this.message.success('新增成功');
+          });
+          this.message.success('新增成功');
+        }
       }
       this.displayedList = [...this.listOfData];
     });
@@ -392,5 +390,4 @@ export class TableComponent implements OnInit {
       }
     });
   }
-
 }
