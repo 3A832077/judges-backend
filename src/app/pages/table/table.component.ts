@@ -317,8 +317,8 @@ export class TableComponent implements OnInit {
 
     // 接收表單傳回的資料
     modal.afterClose.subscribe((result) => {
-      const index = this.listOfData.findIndex(item => item.id === data.id);
       if (result){
+        const index = this.listOfData.findIndex(item => item.id === data.id);
         if (isEdit) { // 編輯
           if (index !== -1) {
             this.listOfData[index].name = result.label;
