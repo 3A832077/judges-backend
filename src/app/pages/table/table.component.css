@@ -1,9 +1,3 @@
-.buttonDiv{
-  padding-bottom: 20px;
-  display: flex;
-  justify-content: flex-end;
-}
-
 .formDiv{
   display: flex;
   justify-content: space-between;
@@ -15,4 +9,17 @@
 
 .deleteImg{
   vertical-align: top;
+}
+
+.header-container {
+  padding: 16px;
+}
+
+.right-section {
+  display: flex;
+  gap: 10px;
+}
+
+.search-form {
+  margin-bottom: 0;
 }

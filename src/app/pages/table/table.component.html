@@ -1,8 +1,15 @@
-<div nz-col nzSpan="24" class="buttonDiv">
-  <div nz-col class="formDiv">
-    <form nz-form [formGroup]="form">
+<div nz-row nzJustify="space-between" class="header-container">
+  <div nz-col>
+    <button nz-button nzType="primary" (click)="deleteFile(true)"
+      [disabled]="(!checked || indeterminate) && (checked || !indeterminate)">
+      刪除已勾選檔案
+    </button>
+  </div>
+
+  <div nz-col class="right-section">
+    <form nz-form [formGroup]="form" class="search-form">
       <nz-form-item>
-        <nz-form-control [nzSpan]="22">
+        <nz-form-control [nzSpan]="24">
           <nz-input-group nzPrefixIcon="search" [nzSuffix]="inputClearTp">
             <input formControlName="search" nz-input
                    placeholder="請輸入關鍵字" (keypress)="searchList($event)"/>
@@ -12,8 +19,8 @@
               *ngIf="form.get('search')?.value"
               nz-icon class="ant-input-clear-icon"
               nzTheme="fill" nzType="close-circle"
-              (click)="form.get('search')?.setValue('')"
-            ></span>
+              (click)="form.get('search')?.setValue('')">
+            </span>
           </ng-template>
         </nz-form-control>
       </nz-form-item>
@@ -23,12 +30,19 @@
     </button>
   </div>
 </div>
+
 <nz-table #filterTable [nzData]="displayedList" [nzTotal]="total"
           [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
           [nzShowTotal]="totalTemplate" nzShowSizeChanger>
 <ng-template #totalTemplate let-total>總共 {{ total }} 筆</ng-template>
   <thead>
     <tr>
+      <th
+        [nzChecked]="checked"
+        [nzIndeterminate]="indeterminate"
+        [nzDisabled]="displayedList.length === 0"
+        (nzCheckedChange)="onAllChecked($event)">
+      </th>
       <th *ngFor="let column of Columns"
           [nzWidth]="column.width"
           [nzAlign]="column.position"
@@ -45,6 +59,11 @@
   </thead>
   <tbody>
     <tr *ngFor="let data of filterTable.data">
+      <td
+        [nzChecked]="data.checked"
+        [nzLabel]="data.name"
+        (nzCheckedChange)="onItemChecked($event, data.id)">
+      </td>
       <td nzBreakWord>
         {{ data.name }}
       </td>
@@ -66,7 +85,7 @@
           <img src="edit.svg" alt="編輯" class="editImg" height="20px" width="20px">
         </a>
         <nz-divider nzType="vertical"></nz-divider>
-        <a title="刪除" (click)="deleteFile(data.id)">
+        <a title="刪除" (click)="deleteFile(false, data.id)">
           <img src="delete.svg" alt="刪除" class="deleteImg">
         </a>
       </td>

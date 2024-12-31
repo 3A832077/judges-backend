@@ -20,6 +20,7 @@ interface ItemData {
   url: string;
   createDate: string;
   lastUpdate: string;
+  checked: boolean;
   done: boolean;
 }
 
@@ -53,6 +54,10 @@ export class TableComponent implements OnInit {
   format = 'yyyy-MM-dd';
 
   formattedDate = formatDate(this.date, this.format, 'zh-TW');
+
+  checked = false;
+
+  indeterminate = false;
 
   Columns: ColumnItem[] = [
     {
@@ -129,6 +134,7 @@ export class TableComponent implements OnInit {
       createDate: this.formattedDate,
       lastUpdate: format(subDays(new Date(), 1), 'yyyy-MM-dd'),
       done: true,
+      checked: false
     },
     {
       id: 1,
@@ -137,7 +143,8 @@ export class TableComponent implements OnInit {
       url: 'https://tph.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
-      done: false
+      done: false,
+      checked: false
     },
     {
       id: 2,
@@ -146,7 +153,8 @@ export class TableComponent implements OnInit {
       url: 'https://tyd.judicial.gov.tw/',
       createDate: format(subDays(new Date(), 10), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
-      done: false
+      done: false,
+      checked: false
     },
     {
       id: 3,
@@ -155,7 +163,8 @@ export class TableComponent implements OnInit {
       url: 'https://pcd.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
-      done: true
+      done: true,
+      checked: false
     },
     {
       id: 4,
@@ -164,7 +173,8 @@ export class TableComponent implements OnInit {
       url: 'https://tpb.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
-      done: false
+      done: false,
+      checked: false
     },
     {
       id: 5,
@@ -173,7 +183,8 @@ export class TableComponent implements OnInit {
       url: 'https://tch.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
-      done: false
+      done: false,
+      checked: false
     },
     {
       id: 6,
@@ -182,7 +193,8 @@ export class TableComponent implements OnInit {
       url: 'https://tpd.judicial.gov.tw/',
       createDate: format(subDays(new Date(), 15), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
-      done: true
+      done: true,
+      checked: false
     },
     {
       id: 7,
@@ -191,7 +203,8 @@ export class TableComponent implements OnInit {
       url: 'https://kld.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
-      done: true
+      done: true,
+      checked: false
     },
     {
       id: 8,
@@ -200,7 +213,8 @@ export class TableComponent implements OnInit {
       url: 'https://tnd.judicial.gov.tw/',
       createDate: format(subDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
-      done: false
+      done: false,
+      checked: false
     },
     {
       id: 9,
@@ -209,7 +223,8 @@ export class TableComponent implements OnInit {
       url: 'https://tpb.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
-      done: false
+      done: false,
+      checked: false
     },
     {
       id: 10,
@@ -218,7 +233,8 @@ export class TableComponent implements OnInit {
       url: 'https://ksh.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
-      done: false
+      done: false,
+      checked: false
     },
     {
       id: 11,
@@ -227,7 +243,8 @@ export class TableComponent implements OnInit {
       url: 'https://kmh.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
-      done: false
+      done: false,
+      checked: false
     },
     {
       id: 12,
@@ -236,7 +253,8 @@ export class TableComponent implements OnInit {
       url: 'https://mld.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 12), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
-      done: false
+      done: false,
+      checked: false
     },
     {
       id: 13,
@@ -245,7 +263,8 @@ export class TableComponent implements OnInit {
       url: 'https://ild.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 2), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
-      done: false
+      done: false,
+      checked: false
     },
     {
       id: 14,
@@ -254,7 +273,8 @@ export class TableComponent implements OnInit {
       url: 'https://fhfh.com',
       createDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
-      done: false
+      done: false,
+      checked: false
     },
     {
       id: 15,
@@ -263,7 +283,8 @@ export class TableComponent implements OnInit {
       url: 'https://ptd.judicial.gov.tw/',
       createDate: format(addDays(new Date(), 4), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
-      done: false
+      done: false,
+      checked: false
     },
     {
       id: 16,
@@ -272,7 +293,8 @@ export class TableComponent implements OnInit {
       url: 'https://ipc.judicial.gov.tw/',
       createDate: format(subDays(new Date(), 7), 'yyyy-MM-dd'),
       lastUpdate: this.formattedDate,
-      done: false
+      done: false,
+      checked: false
     }
   ];
 
@@ -308,6 +330,7 @@ export class TableComponent implements OnInit {
       nzTitle: isEdit ? '編輯' : '新增',
       nzContent: FormComponent,
       nzMaskClosable: false,
+      nzClosable: false,
       nzCentered: true,
       nzZIndex: 60,
       nzWidth: window.innerWidth < 579 ? '400px' : '500px',
@@ -318,20 +341,21 @@ export class TableComponent implements OnInit {
     // 接收表單傳回的資料
     modal.afterClose.subscribe((result) => {
       if (result){
-        const index = this.listOfData.findIndex(item => item.id === data.id);
-        if (isEdit) { // 編輯
+        if (isEdit) {
+          // 編輯
+          const index = this.listOfData.findIndex(item => item.id === data.id);
           if (index !== -1) {
             this.listOfData[index].name = result.label;
             this.listOfData[index].type = result.type;
             this.listOfData[index].url = result.url;
             this.listOfData[index].lastUpdate = this.formattedDate;
-            this.message.success('編輯成功');
           }
           else {
             this.message.error('編輯失敗');
           }
         }
-        else { // 新增
+        else {
+          // 新增
           this.listOfData.push({
             id: this.listOfData.length + 1,
             type: result.type,
@@ -339,12 +363,13 @@ export class TableComponent implements OnInit {
             url: result.url,
             createDate: this.formattedDate,
             lastUpdate: this.formattedDate,
-            done: false
+            done: false,
+            checked: false
           });
-          this.message.success('新增成功');
         }
+        this.displayedList = [...this.listOfData];
+        this.message.success(isEdit ? '編輯成功' : '新增成功');
       }
-      this.displayedList = [...this.listOfData];
     });
   }
 
@@ -371,23 +396,56 @@ export class TableComponent implements OnInit {
    * 刪除資料
    * @param id
    */
-  deleteFile(id: number): void {
+  deleteFile(all: boolean, id?: number): void {
     const modal: NzModalRef = this.modalService.confirm({
-      nzTitle: '確定要刪除此檔案嗎?',
+      nzTitle: '確定要刪除檔案嗎?',
+      nzClosable: false,
       nzOnOk: () => {
-        const index = this.listOfData.findIndex(item => item.id === id);
-        if (index === -1) {
-          this.message.error('刪除失敗');
+        if (all){
+          // 勾選的檔案刪除
+          this.displayedList = this.listOfData.filter(item => !item.checked).sort((a, b) =>
+              new Date(b.createDate).getTime() - new Date(a.createDate).getTime());
+          this.checked = false;
+          this.indeterminate = false;
         }
         else{
-          this.listOfData.splice(index, 1);
-          this.displayedList = [...this.listOfData];
-          this.message.success('刪除成功');
+          // 單筆刪除
+          const index = this.listOfData.findIndex(item => item.id === id);
+          if (index === -1) {
+            this.message.error('刪除失敗');
+          }
+          else{
+            this.listOfData.splice(index, 1)
+            this.displayedList = [...this.listOfData];
+          }
         }
+        this.message.success('刪除成功');
       },
       nzOnCancel: () => {
         modal.close();
       }
     });
   }
+
+  /**
+   * 全選/全不選
+   * @param checked
+   */
+  onAllChecked(checked: boolean): void {
+    this.checked = checked;
+    this.indeterminate = false;
+    this.listOfData.forEach(item => item.checked = checked);
+  }
+
+  /**
+   * 單筆選取
+   * @param checked
+   * @param id
+   */
+  onItemChecked(checked: boolean, id: number): void {
+    this.listOfData[id].checked = checked;
+    this.checked = this.listOfData.every(item => item.checked);
+    this.indeterminate = this.listOfData.some(item => item.checked) && !this.checked;
+  }
+
 }
